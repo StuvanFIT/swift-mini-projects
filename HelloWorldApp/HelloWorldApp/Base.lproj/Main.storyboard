@@ -40,12 +40,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Age:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFe-zR-jwA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Of Birth:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFe-zR-jwA">
                                 <rect key="frame" x="16" y="279" width="408" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="b1C-qy-EvB">
+                                <rect key="frame" x="16" y="479" width="408" height="216"/>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -56,9 +59,12 @@
                             <constraint firstItem="BFe-zR-jwA" firstAttribute="top" secondItem="lwo-nn-REV" secondAttribute="bottom" constant="32" id="DjA-mZ-Pah"/>
                             <constraint firstItem="7Qe-oT-uYz" firstAttribute="top" secondItem="o3K-B7-M7X" secondAttribute="bottom" constant="32" id="E2b-7S-x2b"/>
                             <constraint firstItem="7Qe-oT-uYz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Eqi-Me-Pqe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="b1C-qy-EvB" secondAttribute="trailing" constant="16" id="GNc-H5-hOl"/>
+                            <constraint firstItem="b1C-qy-EvB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="IeI-bm-SUQ"/>
                             <constraint firstItem="BFe-zR-jwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="M7v-8J-iqo"/>
                             <constraint firstItem="o3K-B7-M7X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="OU2-Vy-fqQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fjw-sc-UcM" secondAttribute="trailing" constant="16" id="RM3-Y2-wT2"/>
+                            <constraint firstItem="b1C-qy-EvB" firstAttribute="top" secondItem="7Qe-oT-uYz" secondAttribute="bottom" constant="70" id="T48-OK-MMF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="o3K-B7-M7X" secondAttribute="trailing" constant="16" id="Up2-vZ-eGf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7Qe-oT-uYz" secondAttribute="trailing" constant="16" id="XvV-5K-jPB"/>
                             <constraint firstItem="fjw-sc-UcM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="ZBx-wq-kTh"/>
@@ -69,13 +75,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Hello World!" id="wi0-W6-WPu"/>
                     <connections>
-                        <outlet property="ageField" destination="o3K-B7-M7X" id="0ZC-i0-INm"/>
+                        <outlet property="birthDateField" destination="o3K-B7-M7X" id="VwP-QH-y3F"/>
+                        <outlet property="datePickerField" destination="b1C-qy-EvB" id="exf-TA-fWk"/>
                         <outlet property="nameField" destination="lwo-nn-REV" id="yT7-Ie-nax"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046.5648854961833" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="1045.909090909091" y="3.1380753138075317"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dXe-mN-QhL">
