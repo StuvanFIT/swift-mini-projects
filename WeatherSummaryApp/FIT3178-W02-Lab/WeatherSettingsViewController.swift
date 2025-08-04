@@ -7,7 +7,11 @@
 
 import UIKit
 
-class WeatherSettingsViewController: UIViewController {
+class WeatherSettingsViewController: UIViewController, UITextFieldDelegate, ColourChangeDelegate {
+    func changedToColour(_ colour: UIColor) {
+        colourPreviewView.backgroundColor = colour
+    }
+    
     
     //Outlets
     @IBOutlet weak var descriptionTextField: UITextField!
@@ -16,12 +20,25 @@ class WeatherSettingsViewController: UIViewController {
     @IBOutlet weak var colourPreviewView: UIView!
     
     //Actions
-    @IBAction func colourSegmentedValueChange(_ sender: Any) {
+    
+    //Manual Segue
+    @IBAction func colourSegmentedValueChange(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        let selectedTitle = sender.titleForSegment(at: selectedIndex)
+        
+        //If the selected segment index title is "Custom", then we navigate the user via the pickColourSegue
+        if selectedTitle == "Custom" {
+            performSegue(withIdentifier: "pickColourSegue", sender: sender)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //This view controller will act as the delegate of the descriptionTextField (UITextField)
+        //When the text field needs to know what to do, it calls the textFieldShouldReturn on its delegate
+        descriptionTextField.delegate = self
     }
     
     /*
@@ -53,21 +70,37 @@ class WeatherSettingsViewController: UIViewController {
             }
 
             var colourName = colourSegmentedControl.titleForSegment(at: colourSegmentedControl.selectedSegmentIndex) ?? ""
+            var selectedColour: UIColor?
             
-            // gets the selected segment (a colour name), appends “Colour” to it, and gets
-            // corresponding colour from the Asset Catalog
-            colourName = colourName.appending("Colour")
-            colourPreviewView.backgroundColor = UIColor(named: colourName)
-            
-            
-            let colour = colourPreviewView.backgroundColor?.cgColor
+            if colourName == "Custom" {
+                selectedColour = colourPreviewView.backgroundColor
+            } else {
+                // gets the selected segment (a colour name), appends “Colour” to it, and gets
+                // corresponding colour from the Asset Catalog
+                let colourNameString = colourName + "Colour"
+                selectedColour = UIColor(named: colourNameString)
+                colourPreviewView.backgroundColor = selectedColour
+            }
             
             //Create and store weather data inside weatherdetails struc
-            var weatherDetails = WeatherDetails(description: description, backgroundColour: colour, icon: icon)
+            let selectedColourCG = selectedColour?.cgColor
+            let weatherDetails = WeatherDetails(description: description, backgroundColour: selectedColourCG, icon: icon)
             
             let destination = segue.destination as! WeatherSummaryViewController
             destination.weatherDetails = weatherDetails
+            
+        } else if segue.identifier == "pickColourSegue" {
+            let destination = segue.destination as! ChooseColourViewController
+            destination.delegate = self
+            
         }
+    }
+    
+    //UITextFieldDelegate  delegate method
+    //we must assign a delegate to call this method
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
