@@ -13,6 +13,8 @@ protocol ColourChangeDelegate: AnyObject {
 
 class ChooseColourViewController: UIViewController {
     
+    weak var initialColour: CGColor?
+    
     //Delegate
     weak var delegate: ColourChangeDelegate?
     
@@ -24,8 +26,28 @@ class ChooseColourViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        //Extension 3
+        if let cgColour = initialColour,
+           let components = cgColour.components,
+           cgColour.numberOfComponents >= 3 {
+            
+            let redFloat = Float(components[0])
+            let greenFloat = Float(components[1])
+            let blueFloat = Float(components[2])
+            
+            //Set the values of the sliders with the corresponding float values
+            //Note: this does not trigger the .valueChanged and UIKit only executes action methods when the user interacts with it
+            redSlider.value = redFloat
+            greenSlider.value = greenFloat
+            blueSlider.value = blueFloat
+            
+            //We call the action
+            sliderValueChanged(self)
+           
+        }
+        
     }
     
     

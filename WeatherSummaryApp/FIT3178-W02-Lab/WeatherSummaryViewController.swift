@@ -15,8 +15,6 @@ class WeatherSummaryViewController: UIViewController {
     @IBOutlet weak var summaryButton: UIButton!
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +36,9 @@ class WeatherSummaryViewController: UIViewController {
         //Set the colour only if valid
         if let colour = weatherDetails.backgroundColour {
             summaryButton.tintColor = UIColor(cgColor: colour)
+        } else {
+            //Fallback colour
+            summaryButton.tintColor = UIColor.systemGray
         }
         
     }
