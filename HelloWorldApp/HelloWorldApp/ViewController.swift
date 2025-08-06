@@ -54,36 +54,40 @@ class ViewController: UIViewController {
             return
         }
         
-        //Extension 1/2:
-
-        guard let birthDateText = birthDateField.text, !birthDateText.isEmpty else {
-            // dob could not be established. Print an error and exit
-            displayMessage(title: "Error", message: "Please enter your date of birth in the format YYYY-MM-DD")
-            return
-        }
-        
-        //Parse the birth date text and convert to the birthDateText into a Date instance
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale.current
-
-        guard let birthDate = formatter.date(from: birthDateText) else {
-            displayMessage(title: "Error", message: "Date Format must be in YYYY-MM-DD")
-            return
-        }
-        
-        
-        
-//        //Extension 3:
-//        //datePickerField may be null
-//        guard let birthDate = datePickerField?.date else {
-//            displayMessage(title: "ERROR:", message: "Date picked is not found. Please contact us for help!")
+//        //Extension 1/2:
+//
+//        guard let birthDateText = birthDateField.text, !birthDateText.isEmpty else {
+//            // dob could not be established. Print an error and exit
+//            displayMessage(title: "Error", message: "Please enter your date of birth in the format YYYY-MM-DD")
 //            return
 //        }
-//       
+//        
+//        //Parse the birth date text and convert to the birthDateText into a Date instance
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd"
+//        formatter.locale = Locale.current
+//
+//        guard let birthDate = formatter.date(from: birthDateText) else {
+//            displayMessage(title: "Error", message: "Date Format must be in YYYY-MM-DD")
+//            return
+//        }
         
-
         
+        //Extension 3:
+        //datePickerField may be null
+        guard let birthDate = datePickerField?.date else {
+            displayMessage(title: "ERROR:", message: "Date picked is not found. Please contact us for help!")
+            return
+        }
+        
+        //Check if birthday is in the future
+        guard birthDate <= Date() else {
+            displayMessage(title: "ERROR:", message: "Date of birth cannot be in the future")
+            return
+        }
+        
+        
+    
         //Create an instance of Person with a name and dob
         let person = Person(inputName:name, inputDate: birthDate)
         
