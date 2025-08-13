@@ -51,6 +51,13 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
         .dc))
         allHeroes.append(Superhero(name: "Cyborg", abilities: "Robot Beep Beep", universe: .dc))
         allHeroes.append(Superhero(name: "Aquaman", abilities: "Atlantian", universe: .dc))
+        allHeroes.append(Superhero(name: "Ironman", abilities: "Maximum Pulse", universe: .marvel))
+        allHeroes.append(Superhero(name: "Captain America", abilities: "Avengers Assemble", universe: .marvel))
+        allHeroes.append(Superhero(name: "Hulk", abilities: "Hulk is angry", universe: .marvel))
+        allHeroes.append(Superhero(name: "Black Panther", abilities: "Wakanda", universe: .marvel))
+        allHeroes.append(Superhero(name: "Thor", abilities: "Might of Ragnorak", universe: .marvel))
+        allHeroes.append(Superhero(name: "Spiderman", abilities: "Sticky web", universe: .marvel))
+        allHeroes.append(Superhero(name: "Ben 10", abilities: "Ultimatrix", universe: .other))
     }
     
     func configureSearchBar() {
@@ -64,11 +71,16 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
         navigationItem.hidesSearchBarWhenScrolling = false
         // This view controller decides how the search controller is presented
         definesPresentationContext = true
+        
+        //Add the scope bar buttons
+        searchController.searchBar.scopeButtonTitles = ["All", "Marvel", "DC", "Other"]
+        searchController.searchBar.showsScopeBar = true
     }
 
     
     //This method will be called every time a change is detected in the search bar
     func updateSearchResults(for searchController: UISearchController) {
+        
         /*
          Before starting any filtering, we want to make sure that there is search text to be
          accessed. The search text is converted to lowercase so that we do not have to worry
@@ -78,24 +90,75 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
             return
         }
         
+        //Scope bar: retrive the currently selected scope bar index
+        let selectedScopeIndex = searchController.searchBar.selectedScopeButtonIndex
+        let scopeButtonTiles = searchController.searchBar.scopeButtonTitles ?? []
+        
+
         /*
          filter must return boolean
          For each element/hero, it returns true if the hero can stay in the new array
          else, the hero is removed from the array
+         
+         For a filtered hero to be valid, it must match the selected scope bar index and search text
          */
-        if searchText.count > 0 {
-            filteredHeroes = allHeroes.filter({ (hero: Superhero) -> Bool in
-                return (hero.name?.lowercased().contains(searchText) ?? false)
-            })
-        } else {
-            filteredHeroes = allHeroes
+        filteredHeroes = allHeroes.filter { hero in 
+            matchesScopeSegment(hero: hero, selectedScopeIndex: selectedScopeIndex, scopeButtonTiles: scopeButtonTiles)
+            && matchesSearchText(hero: hero, searchText: searchText)
         }
+        
         tableView.reloadData()
     }
     
+    
+    /*
+     Checks to see if the hero's universe matches the scope bar filter titles (i.e. marvel, dc, other)
+     */
+    func matchesScopeSegment(hero: Superhero, selectedScopeIndex: Int, scopeButtonTiles: [String]) -> Bool {
+        if selectedScopeIndex < scopeButtonTiles.count {
+            let selectedScope = scopeButtonTiles[selectedScopeIndex]
+            switch selectedScope {
+            case "All":
+                return true
+            case "Marvel":
+                return hero.universe == .marvel
+            case "DC":
+                return hero.universe == .dc
+            case "Other":
+                return hero.universe == .other
+            default:
+                return true
+            }
+        } else {
+            //if an invalid scope bar index is selected, then we just pass the hero (show all heroes)
+            return true
+        }
+    }
+    
+    func matchesSearchText(hero: Superhero, searchText: String) -> Bool {
+        if !searchText.isEmpty {
+            return hero.name?.lowercased().contains(searchText) ?? false
+        } else {
+            return true
+        }
+    }
+    
+    
+    
+    
+    
     func addSuperhero(_ newHero: Superhero) -> Bool {
+        //Validate the new superhero
+        //Check if the superhero name already exists in the (case sensitive) all super hero list
+        let result =  filteredHeroes.contains(where: {hero in hero.name?.lowercased() == newHero.name?.lowercased()})
+        
+        //If there is an already existing superhero with the same name as the new superhero, then do nto add the superhero
+        if (result) {
+            return false
+        }
+        
         tableView.performBatchUpdates({
-            
+    
             allHeroes.append(newHero)
             filteredHeroes.append(newHero)
             
@@ -213,7 +276,7 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
                 return
             }
             else {
-                displayMessage(title: "Party is Full!", message: "Unable to add more superheroes to the party!")
+                displayMessage(title: "Cannot Add Superhero to party", message: "Your party is full or this superhero already exists in your party!")
             }
         }
         
