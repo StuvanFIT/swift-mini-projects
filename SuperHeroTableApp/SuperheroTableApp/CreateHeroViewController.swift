@@ -45,7 +45,7 @@ class CreateHeroViewController: UIViewController {
                 navigationController?.popViewController(animated: true)
                 return
             } else {
-                displayMessage(title: "Error", message: "Could not create your superhero!")
+                displayMessage(title: "Error: Could not create your superhero", message: "You attempted to add a duplicate hero with the same name!")
             }
         }
     }
