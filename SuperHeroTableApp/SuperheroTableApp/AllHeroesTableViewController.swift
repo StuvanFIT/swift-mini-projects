@@ -165,7 +165,7 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
             //Insert the new hero into the tableview
             tableView.insertRows(at: [IndexPath(row: filteredHeroes.count - 1, section: HERO_SECTION)], with: .automatic)
             
-            tableView.reloadSections([SECTION_INFO], with: .automatic)
+            tableView.reloadSections([INFO_SECTION], with: .automatic)
         }, completion: nil)
         
         return true
@@ -252,7 +252,7 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
                 //Delete the row from the table view/
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 //Update the info section
-                self.tableView.reloadSections([HERO_SECTION], with: .automatic)
+                self.tableView.reloadSections([INFO_SECTION], with: .automatic)
             
             }, completion: nil)
             
