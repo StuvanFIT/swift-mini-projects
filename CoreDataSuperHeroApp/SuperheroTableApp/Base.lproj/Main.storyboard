@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6ZS-w7-XTD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zYv-SW-WIv">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -76,7 +76,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3g-EQ-or1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2058.7786259541986" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="3912.2137404580153" y="3.5211267605633805"/>
         </scene>
         <!--All Heroes-->
         <scene sceneID="9hU-E2-x6Q">
@@ -153,7 +153,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0CP-ZK-zFx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2879" y="4"/>
+            <point key="canvasLocation" x="4732.06106870229" y="3.5211267605633805"/>
         </scene>
         <!--Create A Hero-->
         <scene sceneID="IGp-SH-zlJ">
@@ -243,30 +243,154 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rap-bD-JUq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3722.9007633587785" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="5576.3358778625952" y="3.5211267605633805"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Rh5-xs-ZFK">
+        <!--Create Team View Controller-->
+        <scene sceneID="2j4-9u-b4D">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6ZS-w7-XTD" sceneMemberID="viewController">
+                <viewController id="zt3-Vg-pLC" customClass="CreateTeamViewController" customModule="SuperheroTableApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mAb-3Y-q1M">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6y4-d7-2Am">
+                                <rect key="frame" x="16" y="178" width="361" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="diK-dD-yWa">
+                                <rect key="frame" x="16" y="215" width="361" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rc-Qd-gPC">
+                                <rect key="frame" x="16" y="281" width="361" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Create Team"/>
+                                <connections>
+                                    <action selector="createTeam:" destination="zt3-Vg-pLC" eventType="touchUpInside" id="Pg8-zv-uWv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lpf-yP-rwH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8Rc-Qd-gPC" firstAttribute="top" secondItem="diK-dD-yWa" secondAttribute="bottom" constant="32" id="1Uy-bE-snW"/>
+                            <constraint firstItem="6y4-d7-2Am" firstAttribute="top" secondItem="lpf-yP-rwH" secondAttribute="top" constant="16" id="4JX-OQ-cOO"/>
+                            <constraint firstItem="8Rc-Qd-gPC" firstAttribute="leading" secondItem="lpf-yP-rwH" secondAttribute="leading" constant="16" id="9ub-aL-qxL"/>
+                            <constraint firstItem="lpf-yP-rwH" firstAttribute="trailing" secondItem="diK-dD-yWa" secondAttribute="trailing" constant="16" id="KU7-7Z-56L"/>
+                            <constraint firstItem="6y4-d7-2Am" firstAttribute="leading" secondItem="lpf-yP-rwH" secondAttribute="leading" constant="16" id="KYD-kN-27Q"/>
+                            <constraint firstItem="diK-dD-yWa" firstAttribute="leading" secondItem="lpf-yP-rwH" secondAttribute="leading" constant="16" id="UtW-ap-W6g"/>
+                            <constraint firstItem="diK-dD-yWa" firstAttribute="top" secondItem="6y4-d7-2Am" secondAttribute="bottom" constant="16" id="cJ5-yi-Dwv"/>
+                            <constraint firstItem="lpf-yP-rwH" firstAttribute="trailing" secondItem="8Rc-Qd-gPC" secondAttribute="trailing" constant="16" id="qjd-Qb-KJk"/>
+                            <constraint firstItem="lpf-yP-rwH" firstAttribute="trailing" secondItem="6y4-d7-2Am" secondAttribute="trailing" constant="16" id="xmx-Im-qsX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="1V9-eQ-rYy"/>
+                    <connections>
+                        <outlet property="teamTextField" destination="diK-dD-yWa" id="gfJ-Ex-iYp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Mq-Gk-fMK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3543" y="-665"/>
+        </scene>
+        <!--All Teams-->
+        <scene sceneID="bTt-XL-AxS">
+            <objects>
+                <tableViewController title="All Teams" id="7F1-Fs-hJj" customClass="AllTeamsTableViewController" customModule="SuperheroTableApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="lph-NN-g4A">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="teamCell" textLabel="dvp-Ao-Rjx" detailTextLabel="YPM-Yj-QSh" style="IBUITableViewCellStyleSubtitle" id="aeJ-MO-fhd">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aeJ-MO-fhd" id="64P-au-fyu">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dvp-Ao-Rjx">
+                                            <rect key="frame" x="20" y="6.0000000000000009" width="25" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YPM-Yj-QSh">
+                                            <rect key="frame" x="19.999999999999996" y="22.333333333333336" width="43.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="totalTeams" textLabel="nxL-hI-vPn" style="IBUITableViewCellStyleDefault" id="W10-Du-Kjj">
+                                <rect key="frame" x="0.0" y="93.666667938232422" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W10-Du-Kjj" id="Mig-5g-4si">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nxL-hI-vPn">
+                                            <rect key="frame" x="20" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7F1-Fs-hJj" id="eFK-x1-eOV"/>
+                            <outlet property="delegate" destination="7F1-Fs-hJj" id="6CG-aI-Icf"/>
+                        </connections>
+                    </tableView>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="W7F-DZ-B18">
+                    <navigationItem key="navigationItem" title="All Teams" id="Fgy-7f-4f2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZSc-bq-mYe">
+                            <connections>
+                                <segue destination="zt3-Vg-pLC" kind="show" id="l99-u1-dg8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="WK6-vG-0rB" kind="show" identifier="teamSegue" id="1nl-Jc-maA"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nl4-2B-mXC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2979.3893129770991" y="17.605633802816904"/>
+        </scene>
+        <!--All Teams-->
+        <scene sceneID="tBN-3B-YwQ">
+            <objects>
+                <navigationController title="All Teams" automaticallyAdjustsScrollViewInsets="NO" id="zYv-SW-WIv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1RY-Gu-fTR">
                         <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="WK6-vG-0rB" kind="relationship" relationship="rootViewController" id="Cxs-ya-tIk"/>
+                        <segue destination="7F1-Fs-hJj" kind="relationship" relationship="rootViewController" id="hh2-iB-5Np"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Prv-8W-SlP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bdN-9f-hU4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1132.06106870229" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="2052.6717557251909" y="17.605633802816904"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

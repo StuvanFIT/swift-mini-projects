@@ -43,6 +43,7 @@ enum DatabaseChange {
 
 enum ListenerType {
     case team
+    case teams
     case heroes
     case all
 }
@@ -69,6 +70,7 @@ protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
     func onTeamChange(change: DatabaseChange, teamHeroes: [Superhero])
     func onAllHeroesChange(change: DatabaseChange, heroes: [Superhero])
+    func onTeamsChange(change: DatabaseChange, teams:[Team])
 }
 
 
@@ -80,7 +82,9 @@ protocol DatabaseListener: AnyObject {
 protocol DatabaseProtocol: AnyObject {
     
     
-    var defaultTeam: Team {get}
+    var currentTeam: Team? {get}
+    
+    func setCurrentTeam(team: Team)
     
     
     func addTeam(teamName: String) -> Team
@@ -99,4 +103,7 @@ protocol DatabaseProtocol: AnyObject {
     func addSuperhero(name: String, abilities: String, universe: Universe) -> Superhero
     
     func deleteSuperhero(hero: Superhero)
+    
+    func fetchAllTeams() -> [Team]
+
 }
