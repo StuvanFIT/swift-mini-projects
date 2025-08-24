@@ -34,26 +34,23 @@ let MAX_PARTY_SIZE = 6
  */
 
 class CurrentPartyTableViewController: UITableViewController, DatabaseListener {
+    func onTeamsChange(change: DatabaseChange, teams: [Team]) {
+        
+    }
+    
     var listenerType: ListenerType = .team
     weak var databaseController: DatabaseProtocol?
 
     //Store an array of superheroes
     var currentParty: [Superhero] = []
-
     
     func addSuperhero(_ newHero: Superhero) -> Bool {
         
-        return databaseController?.addHeroToTeam(hero: newHero, team: databaseController!.defaultTeam) ?? false
+        return databaseController?.addHeroToTeam(hero: newHero, team: (databaseController?.currentTeam)!   ) ?? false
         
 
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "allHeroesSegue" {
-            let destination = segue.destination as! AllHeroesTableViewController
-        }
-    }
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +58,8 @@ class CurrentPartyTableViewController: UITableViewController, DatabaseListener {
         //Set up database controller
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
+        navigationItem.title = databaseController?.currentTeam?.name
+
     }
     
     
@@ -100,7 +99,7 @@ class CurrentPartyTableViewController: UITableViewController, DatabaseListener {
     //Index path specifies a section and row.
     /*
      Every time a table view needs to draw a row on screen, it calls cellForRowAt to ask:
-     “Here’s the section and row I’m showing — please give me a cell, already filled with the right content.”
+     “Here’s the section and row I’m showing - please give me a cell, already filled with the right content.”
      */
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -153,7 +152,7 @@ class CurrentPartyTableViewController: UITableViewController, DatabaseListener {
         if editingStyle == .delete && indexPath.section == SECTION_HERO {
             
             let removedHero = currentParty[indexPath.row]
-            self.databaseController?.removeHeroFromTeam(hero: removedHero, team: databaseController!.defaultTeam)
+            self.databaseController?.removeHeroFromTeam(hero: removedHero, team: (databaseController?.currentTeam)!)
             databaseController?.cleanup()
             
 

@@ -14,6 +14,10 @@ let HERO_CELL = "heroCell"
 let INFO_CELL = "totalCell"
 
 class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdating, DatabaseListener{
+    func onTeamsChange(change: DatabaseChange, teams: [Team]) {
+        
+    }
+    
     
     var allHeroes: [Superhero] = []
     var filteredHeroes: [Superhero] = []
@@ -173,7 +177,7 @@ class AllHeroesTableViewController: UITableViewController, UISearchResultsUpdati
         //We want this to call the addSuperhero method and passing it the superhero
         //Check if there is a delegate assigned first
         let hero = filteredHeroes[indexPath.row]
-        let heroAdded = databaseController?.addHeroToTeam(hero: hero, team: databaseController!.defaultTeam) ?? false
+        let heroAdded = databaseController?.addHeroToTeam(hero: hero, team: databaseController!.currentTeam!) ?? false
         databaseController?.cleanup()
         
         if heroAdded {

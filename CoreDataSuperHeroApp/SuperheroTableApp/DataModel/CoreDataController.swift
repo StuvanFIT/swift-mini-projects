@@ -30,15 +30,16 @@ import CoreData
 
 
 
-class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsControllerDelegate{
-    
+class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsControllerDelegate {
+
+    var currentTeam: Team?
     
     let DEFAULT_TEAM_NAME = "Default Team"
     
     //This controller will watch for changes to all heroes within the database. When a change
     //occurs, the Core Data controller will be notified and can let its listeners know.
     var allHeroesFetchedResultsController: NSFetchedResultsController<Superhero>?
-    
+    var allTeamsFetchedResultsController: NSFetchedResultsController<Team>?
     var teamHeroesFetchedResultsController: NSFetchedResultsController<Superhero>?
     
     //The “listeners” property holds all listeners added to the database inside of the MulticastDelegate class that was added above
@@ -89,13 +90,12 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
             
         }
         super.init()
-        
-        
+    
         //Initialise default heroes
         if (fetchAllHeroes().count == 0) {
             createDefaultHeroes()
         }
-        
+                
     }
     
     
@@ -147,7 +147,11 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
     }
     
     
-    
+    func setCurrentTeam(team: Team) {
+        currentTeam = team
+        teamHeroesFetchedResultsController = nil  // Reset so it gets recreated
+    }
+
     
     /*
      This method will check to see if there are changes to be saved inside of the view
@@ -182,6 +186,10 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         if listener.listenerType == .team || listener.listenerType == .all {
             listener.onTeamChange(change: .update, teamHeroes: fetchTeamHeroes())
         }
+        if listener.listenerType == .teams || listener.listenerType == .all {
+            listener.onTeamsChange(change: .update, teams: fetchAllTeams())
+        }
+        
     }
     
     func removeListener(listener: any DatabaseListener) {
@@ -252,6 +260,45 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         return allHeroesFetchedResultsController?.fetchedObjects ?? []
     }
     
+    /*
+     Fetch all teams from core data
+     */
+    func fetchAllTeams() -> [Team] {
+        if allTeamsFetchedResultsController == nil {
+            
+            let request: NSFetchRequest<Team> = Team.fetchRequest()
+            let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+             request.sortDescriptors = [nameSortDescriptor]
+            
+            
+            // Initialise Fetched Results Controller
+            allTeamsFetchedResultsController =
+            NSFetchedResultsController<Team> (
+                fetchRequest: request,
+                managedObjectContext: persistentContainer.viewContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil
+            )
+            
+            
+            // Set this class to be the results delegate
+            allTeamsFetchedResultsController?.delegate = self
+            
+            //Next, perform the fetch request (whcih will begin the listening process and when updates occur to all heroestable, then this listens to the changes)
+            do {
+                try allTeamsFetchedResultsController?.performFetch()
+            } catch {
+                print("Fetch request failed: \(error)")
+            }
+        }
+        
+        return allTeamsFetchedResultsController?.fetchedObjects ?? []
+    }
+    
+    
+    
+    
+    
     // MARK: - Fetched Results Controller Protocol methods
     /*
      As part of the
@@ -280,6 +327,12 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
             listeners.invoke { (listener) in
                 if listener.listenerType == .team || listener.listenerType == .all {
                     listener.onTeamChange(change: .update,teamHeroes: fetchTeamHeroes())
+                }
+            }
+        } else if controller == allTeamsFetchedResultsController{
+            listeners.invoke { listener in
+                if listener.listenerType == .teams || listener.listenerType == .all {
+                    listener.onTeamsChange(change: .update, teams: fetchAllTeams())
                 }
             }
         }
@@ -334,9 +387,19 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
             let nameSortDescriptor = NSSortDescriptor(key: "name", ascending: true)
             fetchRequest.sortDescriptors = [nameSortDescriptor]
             
-            // 3. Add a predicate to filter only heroes that belong to the DEFAULT_TEAM_NAME
+            // 3. Add a predicate to filter only heroes that belong to the SPECIFIED CURRENT TEAM NAME
             // "ANY teams.name" means: look at the hero's teams relationship and check if any team matches
-            let predicate = NSPredicate(format: "ANY teams.name == %@", DEFAULT_TEAM_NAME)
+            
+            /*
+             teamHeroesFetchedResultsController is created once with a predicate for the first team you visit, and then it's never updated when you switch to different teams.
+             */
+            /*
+             teamHeroesFetchedResultsController is created once with a predicate for the first team you visit, and then it's never updated when you switch to different teams.
+             When you switch teams, the same controller (with the wrong predicate) is reused
+             
+             So we get rid if that "nil -controller setup condition"  OR we need to reset the teamHeroesfectehdresultscontroller everytime we switch
+             */
+            let predicate = NSPredicate(format: "ANY teams.name == %@", currentTeam!.name!)
             fetchRequest.predicate = predicate
             
             // 4. Create the fetched results controller
@@ -366,4 +429,5 @@ class CoreDataController: NSObject, DatabaseProtocol, NSFetchedResultsController
         
         return heroes
     }
+        
 }
